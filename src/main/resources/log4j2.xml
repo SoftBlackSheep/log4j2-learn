@@ -49,7 +49,8 @@
             <!--<XMLLayout charset="UTF-8" compact="false" />-->
         </Console>
 
-        <File name="FileAppender01" fileName="logs/app.log" append="true" bufferSize="8192">
+        <!--FileAppender-->
+        <File name="FileAppender01" fileName="logs/FileAppender.log" append="true" bufferSize="8192">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n%throwable</Pattern>
                 <!--<Pattern>%highlight{%d [%t] %-5level [%C] %msg%n%throwable}</Pattern>-->
@@ -66,11 +67,31 @@
             <Column name="MESSAGE" pattern="%message" />
             <Column name="THROWABLE" pattern="%ex{full}" isClob="true"/>
         </JDBC>
+
+        <!--RandomAccessFileAppender-->
+        <RandomAccessFile name="RandomAccessFileAppender01" fileName="logs/RandomAccessFile.log">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n%throwable</Pattern>
+            </PatternLayout>
+        </RandomAccessFile>
+
+        <!--RollingFileAppender-->
+        <RollingFile name="RollingFileAppender01" fileName="logs/RollingFileAppender.log" filePattern="logs/%d{yyyy-MM}/log4j-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n%throwable</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="1 MB" />
+                <!--<TimeBasedTriggeringPolicy />-->
+            </Policies>
+        </RollingFile>
     </Appenders>
 
     <Loggers>
         <Logger name="org.study.log4j2" level="info">
-            <AppenderRef ref="FileAppender01"/>
+            <AppenderRef ref="RollingFileAppender01"/>
+            <!--<AppenderRef ref="FileAppender01"/>-->
             <!--<AppenderRef ref="JDBCAppender01"/>-->
         </Logger>
 
