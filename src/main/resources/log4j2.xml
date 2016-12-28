@@ -1,14 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration>
+<!-- 自动重新配置 monitorInterval -->
+<Configuration monitorInterval="30">
+    <properties>
+        <property name="LOG_HOME">/log/fish</property>
+        <property name="BACKUP_HOME">{LOG_HOME}/backup</property>
+        <property name="STAT_NAME">stat</property>
+        <property name="SERVER_NAME">global</property>
+    </properties>
+
+    <!--<filter  ... />-->
     <Appenders>
         <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %-5p [%t] %C{2} (%F:%L) - %m%n"/>
+            <!--例子-->
+            <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n%throwable"/>-->
+
+            <!--PatternLayout 自定义日志格式-->
+            <!--<PatternLayout pattern="时间[%d] 日志级别[%-5p] 线程名称[%t] 类全名[%C] 方法名[%M] 源文件名[%F] 代码行[%L] 系统运行时间[%r] UUID[%u] 换行符 %n"/>-->
+
+            <!--PatternLayout 日志高亮设置-->
+            <PatternLayout pattern="%highlight{%d [%t] %-5level [%C] %msg%n%throwable}"/>
+            <!--<PatternLayout pattern="%highlight{%d [%t] %-5level: %msg%n%throwable}{STYLE=Logback}"/>-->
+            <!--<PatternLayout pattern="%highlight{%d [%t] %-5level: %msg%n%throwable}{FATAL=white, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}"/>-->
+
+            <!--设置样式-->
+            <!--<PatternLayout pattern="%style{%d}{black} %style{[%t]}{blue} %style{%-5level:}{yellow} %style{%msg%n%throwable}{green}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Bright}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Dim}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Underline}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Blink}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Reverse}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Hidden}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Black}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{Red}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{BG_Black}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{BG_Red}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{BG_Green}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{BG_Yellow}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{BG_Cyan}"/>-->
+            <!--<PatternLayout pattern="%style{%d [%t] %-5level: %msg%n%throwable}{BG_White}"/>-->
+
+            <!--HTMLLayout-->
+            <!--<HTMLLayout charset="UTF-8" contentType="text/html" locationInfo="false" title="HTML标题"/>-->
+
+            <!--JSONLayout-->
+            <!--<JSONLayout charset="UTF-8" compact="false" />-->
+
+            <!--XMLLayout-->
+            <!--<XMLLayout charset="UTF-8" compact="false" />-->
         </Console>
+
+        <File name="FileAppender01" fileName="logs/app.log" append="true" bufferSize="8192">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n%throwable</Pattern>
+                <!--<Pattern>%highlight{%d [%t] %-5level [%C] %msg%n%throwable}</Pattern>-->
+            </PatternLayout>
+        </File>
+
+        <!--<JDBCAppender/>-->
+        <JDBC name="JDBCAppender01" tableName="log4j2">
+            <ConnectionFactory class="org.study.log4j2.jdbc.ConnectionFactory" method="getDatabaseConnection" />
+            <!--<Column name="EVENT_ID" literal="LOGGING.APPLICATION_LOG_SEQUENCE.NEXTVAL" />-->
+            <Column name="EVENT_DATE" isEventTimestamp="true" />
+            <Column name="LEVEL" pattern="%level" />
+            <Column name="LOGGER" pattern="%logger" />
+            <Column name="MESSAGE" pattern="%message" />
+            <Column name="THROWABLE" pattern="%ex{full}" isClob="true"/>
+        </JDBC>
     </Appenders>
+
     <Loggers>
+        <Logger name="org.study.log4j2" level="info">
+            <AppenderRef ref="FileAppender01"/>
+            <!--<AppenderRef ref="JDBCAppender01"/>-->
+        </Logger>
+
         <Logger name="org.apache.log4j.xml" level="info"/>
+
         <Root level="debug">
-            <AppenderRef ref="STDOUT"/>
+            <!--<AppenderRef ref="STDOUT"/>-->
+            <!--<AppenderRef ref="FileAppender01"/>-->
         </Root>
     </Loggers>
 </Configuration>
