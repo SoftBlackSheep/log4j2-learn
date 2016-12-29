@@ -4,7 +4,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
-import org.study.log4j2.jdbc.ConnectionFactory;
 
 import java.util.Date;
 
@@ -64,6 +63,7 @@ public class LogTest {
         logger.warn("用户名称:[{}], 日期:[{}]", name, birthday);
         logger.error("用户名称:[{}], 日期:[{}]", name, birthday);
         logger.fatal("用户名称:[{}], 日期:[{}]", name, birthday);
+//        logger.error("异常信息提示", new RuntimeException("异常信息"));
 
         LogManager.shutdown();
     }
@@ -82,7 +82,6 @@ public class LogTest {
             logger.fatal("次数[{}] 用户名称:[{}], 日期:[{}]", i, name, birthday);
         }
         LogManager.shutdown();
-        ConnectionFactory.close();
     }
 
 }
