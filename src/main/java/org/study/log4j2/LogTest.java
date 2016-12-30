@@ -63,7 +63,7 @@ public class LogTest {
         logger.warn("用户名称:[{}], 日期:[{}]", name, birthday);
         logger.error("用户名称:[{}], 日期:[{}]", name, birthday);
         logger.fatal("用户名称:[{}], 日期:[{}]", name, birthday);
-//        logger.error("异常信息提示", new RuntimeException("异常信息"));
+        logger.error("异常信息提示", new RuntimeException("异常信息"));
 
         LogManager.shutdown();
     }

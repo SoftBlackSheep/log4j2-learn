@@ -88,20 +88,20 @@
         </RollingFile>
 
         <!--SocketAppender-->
-        <Socket name="SocketAppender01" host="192.168.10.128" port="12345" protocol="TCP">
-            <!--<SerializedLayout />-->
+        <!--<Socket name="SocketAppender01" host="192.168.10.128" port="12345" protocol="TCP">-->
+            <!--&lt;!&ndash;<SerializedLayout />&ndash;&gt;-->
 
-            <!--<PatternLayout>-->
-                <!--<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n%throwable</Pattern>-->
-            <!--</PatternLayout>-->
+            <!--&lt;!&ndash;<PatternLayout>&ndash;&gt;-->
+                <!--&lt;!&ndash;<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %C{2} (%F:%L) - %m%n%throwable</Pattern>&ndash;&gt;-->
+            <!--&lt;!&ndash;</PatternLayout>&ndash;&gt;-->
 
-            <JSONLayout charset="UTF-8" compact="true" eventEol="true" properties="true" locationInfo="true"/>
-        </Socket>
+            <!--<JSONLayout charset="UTF-8" compact="true" eventEol="true" properties="true" locationInfo="true"/>-->
+        <!--</Socket>-->
     </Appenders>
 
     <Loggers>
         <Logger name="org.study.log4j2" level="info">
-            <AppenderRef ref="SocketAppender01"/>
+            <!--<AppenderRef ref="SocketAppender01"/>-->
             <!--<AppenderRef ref="RollingFileAppender01"/>-->
             <!--<AppenderRef ref="FileAppender01"/>-->
             <!--<AppenderRef ref="JDBCAppender01"/>-->
